@@ -48,6 +48,22 @@ namespace LaddersAndSnakesGame
             Assert.AreEqual(2,game.PositionOf("Player1"));
             Assert.AreEqual(4,game.PositionOf("Player2"));
         }
+        
+        
+        [Test]
+        public void Test04()
+        {
+            var players = new List<object> {"Player1", "Player2"};
+            var simulatedDice = new SimulatedDice(new List<int> { 1, 3, 4 });
+            var game = new Game(10,players,simulatedDice);
+
+            game.play();
+            game.play();
+            game.play();
+
+            Assert.AreEqual(6,game.PositionOf("Player1"));
+            Assert.AreEqual(4,game.PositionOf("Player2"));
+        }
     }
 
      public class SimulatedDice
@@ -88,7 +104,8 @@ namespace LaddersAndSnakesGame
          public void play()
          {
              var rolledNumber = _dice.roll();
-             var currentPlayer = _players[_currentPlayerIndex++];
+             var currentPlayer = _players[_currentPlayerIndex];
+             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
              _positionByPlayer[currentPlayer] += rolledNumber;
          }
      }
