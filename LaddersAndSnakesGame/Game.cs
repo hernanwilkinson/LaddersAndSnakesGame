@@ -29,5 +29,15 @@ namespace LaddersAndSnakesGame
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
             _positionByPlayer[currentPlayer] += rolledNumber;
         }
+
+        public bool IsOver()
+        {
+            return true;
+        }
+
+        public object Winner()
+        {
+            return _players[0];
+        }
     }
 }
