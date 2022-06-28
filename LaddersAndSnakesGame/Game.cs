@@ -10,15 +10,17 @@ namespace LaddersAndSnakesGame
         private readonly int _numberOfCells;
         private readonly List<object> _players;
         private readonly IDice _dice;
+        private readonly List<Stair> _stairs;
         private IDictionary<object, int> _positionByPlayer = new Dictionary<object, int>();
         private int _currentPlayerIndex;
 
-        public Game(int numberOfCells, List<object> players, IDice dice)
+        public Game(int numberOfCells, List<object> players, IDice dice, List<Stair> stairs)
         {
             _numberOfCells = numberOfCells;
             _players = players;
             _currentPlayerIndex = 0;
             _dice = dice;
+            _stairs = stairs;
             players.ForEach(player => _positionByPlayer.Add(player,1));
         }
 
@@ -36,6 +38,11 @@ namespace LaddersAndSnakesGame
             var newPosition = _positionByPlayer[currentPlayer] + rolledNumber;
             if (newPosition > _numberOfCells)
                 newPosition = _positionByPlayer[currentPlayer];
+
+            var foundStair = _stairs.Find(stair => stair.StartsOn(newPosition));
+            if (foundStair != null)
+                newPosition = foundStair.To();
+            
             _positionByPlayer[currentPlayer] = newPosition;
             
             CalculateNextPlayer();
