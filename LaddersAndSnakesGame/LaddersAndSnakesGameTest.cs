@@ -99,5 +99,14 @@ namespace LaddersAndSnakesGame
             Assert.IsTrue(game.IsOver());
             Assert.AreEqual("Player2",game.Winner());
         }
+        [Test]
+        public void Test07()
+        {
+            var players = new List<object> {"Player1", "Player2"};
+            var simulatedDice = new SimulatedDice(new List<int> ());
+            var game = new Game(10,players,simulatedDice);
+            
+            Assert.IsFalse(game.IsOver());
+        }
     }
 }

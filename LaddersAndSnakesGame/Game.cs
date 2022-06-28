@@ -35,7 +35,7 @@ namespace LaddersAndSnakesGame
 
         public bool IsOver()
         {
-            return true;
+            return Winner()!=null;
         }
 
         public object Winner()
