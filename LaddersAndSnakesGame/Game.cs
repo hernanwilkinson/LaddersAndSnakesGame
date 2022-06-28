@@ -10,20 +10,17 @@ namespace LaddersAndSnakesGame
         private readonly int _numberOfCells;
         private readonly List<object> _players;
         private readonly IDice _dice;
-        private readonly List<Stair> _stairs;
-        private readonly List<Snake> _snakes;
+        private readonly List<BoardShortcut> _boardShortcuts;
         private IDictionary<object, int> _positionByPlayer = new Dictionary<object, int>();
         private int _currentPlayerIndex;
 
-        public Game(int numberOfCells, List<object> players, IDice dice, List<Stair> stairs, 
-            List<Snake> snakes)
+        public Game(int numberOfCells, List<object> players, IDice dice, List<BoardShortcut> boardShortcuts)
         {
             _numberOfCells = numberOfCells;
             _players = players;
             _currentPlayerIndex = 0;
             _dice = dice;
-            _stairs = stairs;
-            _snakes = snakes;
+            _boardShortcuts = boardShortcuts;
             players.ForEach(player => _positionByPlayer.Add(player,1));
         }
 
@@ -42,13 +39,9 @@ namespace LaddersAndSnakesGame
             if (newPosition > _numberOfCells)
                 newPosition = _positionByPlayer[currentPlayer];
 
-            var foundStair = _stairs.Find(stair => stair.StartsOn(newPosition));
-            if (foundStair != null)
-                newPosition = foundStair.To();
-            
-            var foundSnake = _snakes.Find(snake => snake.StartsOn(newPosition));
-            if (foundSnake != null)
-                newPosition = foundSnake.To();
+            var foundShortcut = _boardShortcuts.Find(shortcut => shortcut.StartsOn(newPosition));
+            if (foundShortcut != null)
+                newPosition = foundShortcut.To();
 
             _positionByPlayer[currentPlayer] = newPosition;
             

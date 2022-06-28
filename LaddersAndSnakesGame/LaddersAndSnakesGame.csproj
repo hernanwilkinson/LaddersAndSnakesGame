@@ -32,6 +32,7 @@
         <PackageReference Include="Xamarin.UITest" Version="2.2.4" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="BoardShortcut.cs" />
         <Compile Include="Dice.cs" />
         <Compile Include="Game.cs" />
         <Compile Include="IDice.cs" />

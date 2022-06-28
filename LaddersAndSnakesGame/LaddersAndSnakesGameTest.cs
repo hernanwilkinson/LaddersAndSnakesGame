@@ -19,7 +19,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             Assert.AreEqual(1,game.PositionOf(PLAYER_1));
             Assert.AreEqual(1,game.PositionOf(PLAYER_2));
@@ -30,7 +30,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             
@@ -43,7 +43,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 3 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             game.Play();
@@ -58,7 +58,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 3, 4 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             game.Play();
@@ -73,7 +73,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 6, 1, 3 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             game.Play();
@@ -90,7 +90,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 6, 1, 3 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             game.Play();
@@ -107,7 +107,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> ());
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
             
             Assert.IsFalse(game.IsOver());
         }
@@ -117,7 +117,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 6, 1, 3 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             game.Play();
@@ -133,7 +133,7 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 6, 1, 6 });
-            var game = new Game(10,players,simulatedDice, new List<Stair>(), new List<Snake>());
+            var game = new Game(10,players,simulatedDice, new List<BoardShortcut>());
 
             game.Play();
             game.Play();
@@ -148,8 +148,8 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1 });
-            var stairs = new List<Stair>{ new Stair(2,38)};
-            var game = new Game(100,players,simulatedDice, stairs, new List<Snake>());
+            var shortcuts = new List<BoardShortcut>{ new BoardShortcut(2,38)};
+            var game = new Game(100,players,simulatedDice, shortcuts);
 
             game.Play();
 
@@ -162,9 +162,8 @@ namespace LaddersAndSnakesGame
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 1, 1 });
-            var stairs = new List<Stair>{ new Stair(2,15)};
-            var snakes = new List<Snake>{ new Snake(16,6)};
-            var game = new Game(100,players,simulatedDice, stairs, snakes);
+            var shortcuts = new List<BoardShortcut>{ new BoardShortcut(2,15), new BoardShortcut(16,6)};
+            var game = new Game(100,players,simulatedDice, shortcuts);
 
             game.Play();
             game.Play();
@@ -174,48 +173,4 @@ namespace LaddersAndSnakesGame
             
         }
     }
-
-     public class Snake
-     {
-         private readonly int _from;
-         private readonly int _to;
-
-         public Snake(int from, int to)
-         {
-             _from = from;
-             _to = to;
-         }
-
-         public bool StartsOn(int position)
-         {
-             return _from.Equals(position);
-         }
-
-         public int To()
-         {
-             return _to;
-         }
-     }
-
-     public class Stair
-     {
-         private readonly int _from;
-         private readonly int _to;
-
-         public Stair(int from, int to)
-         {
-             _from = from;
-             _to = to;
-         }
-
-         public bool StartsOn(int position)
-         {
-             return _from.Equals(position);
-         }
-
-         public int To()
-         {
-             return _to;
-         }
-     }
 }
