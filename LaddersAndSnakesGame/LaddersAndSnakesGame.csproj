@@ -32,7 +32,9 @@
         <PackageReference Include="Xamarin.UITest" Version="2.2.4" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Game.cs" />
         <Compile Include="LaddersAndSnakesGameTest.cs" />
+        <Compile Include="SimulatedDice.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
