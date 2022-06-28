@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LaddersAndSnakesGame
 {
     public class Game
     {
+        private readonly int _numberOfCells;
         private readonly List<object> _players;
         private readonly IDice _dice;
         private IDictionary<object, int> _positionByPlayer = new Dictionary<object, int>();
@@ -11,6 +13,7 @@ namespace LaddersAndSnakesGame
 
         public Game(int numberOfCells, List<object> players, IDice dice)
         {
+            _numberOfCells = numberOfCells;
             _players = players;
             _currentPlayerIndex = 0;
             _dice = dice;
@@ -37,7 +40,7 @@ namespace LaddersAndSnakesGame
 
         public object Winner()
         {
-            return _players[0];
+            return _players.Find(player => PositionOf(player) == _numberOfCells);
         }
     }
 }
