@@ -33,8 +33,17 @@ namespace LaddersAndSnakesGame
             
             var rolledNumber = _dice.Roll();
             var currentPlayer = _players[_currentPlayerIndex];
+            var newPosition = _positionByPlayer[currentPlayer] + rolledNumber;
+            if (newPosition > _numberOfCells)
+                newPosition = _positionByPlayer[currentPlayer];
+            _positionByPlayer[currentPlayer] = newPosition;
+            
+            CalculateNextPlayer();
+        }
+
+        private void CalculateNextPlayer()
+        {
             _currentPlayerIndex = (_currentPlayerIndex + 1) % _players.Count;
-            _positionByPlayer[currentPlayer] += rolledNumber;
         }
 
         private void AssertIsNotOver()
