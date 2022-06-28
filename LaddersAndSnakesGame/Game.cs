@@ -5,11 +5,11 @@ namespace LaddersAndSnakesGame
     public class Game
     {
         private readonly List<object> _players;
-        private readonly SimulatedDice _dice;
+        private readonly IDice _dice;
         private IDictionary<object, int> _positionByPlayer = new Dictionary<object, int>();
         private int _currentPlayerIndex;
 
-        public Game(int numberOfCells, List<object> players, SimulatedDice dice)
+        public Game(int numberOfCells, List<object> players, IDice dice)
         {
             _players = players;
             _currentPlayerIndex = 0;

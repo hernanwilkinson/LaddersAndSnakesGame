@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace LaddersAndSnakesGame
 {
-    public class SimulatedDice
+    public class SimulatedDice : IDice
     {
         private readonly List<int> _rolls;
         private int _currentRoll = 0;
