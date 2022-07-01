@@ -14,8 +14,12 @@ namespace LaddersAndSnakesGame
         private const string PLAYER_1 = "Player1";
         private const string PLAYER_2 = "Player2";
 
+        public LaddersAndSnakesGamesTest()
+        {
+        }
+
         [Test]
-        public void Test01()
+        public void PlayersStartOnInitialPosition()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1 });
@@ -26,7 +30,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test02()
+        public void FirsPlayersMovesToNewPositionAccordingToRolledDice()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1 });
@@ -39,7 +43,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test03()
+        public void AnyPlayersMovesToNewPositionAccordingToRolledDice()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 3 });
@@ -54,7 +58,7 @@ namespace LaddersAndSnakesGame
         
         
         [Test]
-        public void Test04()
+        public void PlayersPlayInCircle()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 3, 4 });
@@ -69,7 +73,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test05()
+        public void FirstPlayerWinsWhenGoesToFinalPosition()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 6, 1, 3 });
@@ -86,7 +90,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test06()
+        public void AnyPlayerWinsWhenGoesToFinalPosition()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1, 6, 1, 3 });
@@ -103,7 +107,7 @@ namespace LaddersAndSnakesGame
             Assert.AreEqual(PLAYER_2,game.Winner());
         }
         [Test]
-        public void Test07()
+        public void GameIsNotOverWhenThereIsNoWinner()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> ());
@@ -113,7 +117,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test08()
+        public void CanNotPlayWhenGameIsOver()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 6, 1, 3 });
@@ -129,7 +133,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test09()
+        public void PlayerCanNotMoveOutsideBoard()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 6, 1, 6 });
@@ -144,7 +148,7 @@ namespace LaddersAndSnakesGame
         }
         
         [Test]
-        public void Test10()
+        public void PlayerMovesThroughBoardShortcuts()
         {
             var players = new List<object> {PLAYER_1, PLAYER_2};
             var simulatedDice = new SimulatedDice(new List<int> { 1 });
@@ -157,20 +161,5 @@ namespace LaddersAndSnakesGame
             
         }
         
-        [Test]
-        public void Test11()
-        {
-            var players = new List<object> {PLAYER_1, PLAYER_2};
-            var simulatedDice = new SimulatedDice(new List<int> { 1, 1, 1 });
-            var shortcuts = new List<BoardShortcut>{ new BoardShortcut(2,15), new BoardShortcut(16,6)};
-            var game = new Game(100,players,simulatedDice, shortcuts);
-
-            game.Play();
-            game.Play();
-            game.Play();
-
-            Assert.AreEqual(6,game.PositionOf(PLAYER_1));
-            
-        }
     }
 }

@@ -11,9 +11,9 @@ namespace LaddersAndSnakesGame
         private readonly List<object> _players;
         private readonly IDice _dice;
         private readonly List<BoardShortcut> _boardShortcuts;
-        private IDictionary<object, int> _positionByPlayer = new Dictionary<object, int>();
+        private readonly IDictionary<object, int> _playersPosition = new Dictionary<object, int>();
         private int _currentPlayerIndex;
-
+        
         public Game(int numberOfCells, List<object> players, IDice dice, List<BoardShortcut> boardShortcuts)
         {
             _numberOfCells = numberOfCells;
@@ -21,31 +21,48 @@ namespace LaddersAndSnakesGame
             _currentPlayerIndex = 0;
             _dice = dice;
             _boardShortcuts = boardShortcuts;
-            players.ForEach(player => _positionByPlayer.Add(player,1));
+            InitializePlayersPosition();
+        }
+
+        private void InitializePlayersPosition()
+        {
+            _players.ForEach(player => _playersPosition.Add(player, 1));
         }
 
         public int PositionOf(object aPlayer)
         {
-            return _positionByPlayer[aPlayer];
+            return _playersPosition[aPlayer];
         }
 
         public void Play()
         {
             AssertIsNotOver();
-            
-            var rolledNumber = _dice.Roll();
-            var currentPlayer = _players[_currentPlayerIndex];
-            var newPosition = _positionByPlayer[currentPlayer] + rolledNumber;
-            if (newPosition > _numberOfCells)
-                newPosition = _positionByPlayer[currentPlayer];
 
-            var foundShortcut = _boardShortcuts.Find(shortcut => shortcut.StartsOn(newPosition));
-            if (foundShortcut != null)
-                newPosition = foundShortcut.To();
-
-            _positionByPlayer[currentPlayer] = newPosition;
-            
+            CalculateCurrentPlayerNewPosition();
             CalculateNextPlayer();
+        }
+
+        private void CalculateCurrentPlayerNewPosition()
+        {
+            var currentPlayer = _players[_currentPlayerIndex];
+            _playersPosition[currentPlayer] = MoveThroughShortcut(NewPositionAfterRollingDice(currentPlayer));
+        }
+
+        private int MoveThroughShortcut(int position)
+        {
+            var foundShortcut = _boardShortcuts.FirstOrDefault(shortcut => shortcut.StartsOn(position));
+            if (foundShortcut != null)
+                position = foundShortcut.To();
+            
+            return position;
+        }
+
+        private int NewPositionAfterRollingDice(object currentPlayer)
+        {
+            var newPosition = _playersPosition[currentPlayer] + _dice.Roll();
+            if (newPosition > _numberOfCells)
+                newPosition = _playersPosition[currentPlayer];
+            return newPosition;
         }
 
         private void CalculateNextPlayer()
